@@ -1,12 +1,15 @@
 import { Task } from "../../interfaces/task";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import styles from "./taskList.module.css";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface TaskListProps {
   taskList: Task[];
+  onDelete: (id: number) => void;
+  handleEdit: (data: Task) => void;
 }
 
-const TaskList = ({ taskList }: TaskListProps) => {
+const TaskList = ({ taskList, onDelete, handleEdit }: TaskListProps) => {
   return (
     <>
       {taskList.length > 0 ? (
@@ -17,8 +20,12 @@ const TaskList = ({ taskList }: TaskListProps) => {
               <p>Dificuldade: {task.difficulty}</p>
             </div>
             <div className={styles.actions}>
-              <i className="bi bi-pencil"></i>
-              <i className="bi bi-trash"></i>
+              <button onClick={() => handleEdit(task)}>
+                <EditIcon />
+              </button>
+              <button onClick={() => onDelete(task.id)}>
+                <DeleteIcon />
+              </button>
             </div>
           </div>
         ))

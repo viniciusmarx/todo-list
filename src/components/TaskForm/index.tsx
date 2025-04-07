@@ -6,20 +6,38 @@ interface TaskFormProps {
   btnText: string;
   taskList: Task[];
   setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
+  data?: Task;
+  handleUpdate?: (task: Task) => void;
 }
 
-const TaskForm = ({ btnText, taskList, setTaskList }: TaskFormProps) => {
-  const { register, handleSubmit, reset } = useForm<Task>();
+const TaskForm = ({
+  btnText,
+  taskList,
+  setTaskList,
+  data,
+  handleUpdate,
+}: TaskFormProps) => {
+  const { register, handleSubmit, reset } = useForm<Task>({
+    defaultValues: {
+      id: data?.id,
+      title: data?.title,
+      difficulty: data?.difficulty,
+    },
+  });
 
-  const onSubmit = (data: Task) => {
-    const id = taskList.length > 0 ? taskList[taskList.length - 1].id + 1 : 1;
-    const newTask: Task = {
-      id: id,
-      title: data.title,
-      difficulty: data.difficulty,
-    };
-    setTaskList([...taskList, newTask]);
-    reset();
+  const onSubmit = (formData: Task) => {
+    if (data && handleUpdate) {
+      handleUpdate(formData);
+    } else {
+      const id = taskList.length > 0 ? taskList[taskList.length - 1].id + 1 : 1;
+      const newTask: Task = {
+        id: id,
+        title: formData.title,
+        difficulty: formData.difficulty,
+      };
+      setTaskList([...taskList, newTask]);
+      reset();
+    }
   };
 
   return (

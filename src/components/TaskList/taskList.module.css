@@ -23,16 +23,17 @@
   justify-content: center;
 }
 
-.actions i {
+.actions button {
   margin-bottom: 0.5em;
-  font-size: 1.2em;
+  font-size: 0.5em;
   cursor: pointer;
   background-color: #282c34;
   color: #fff;
   padding: 0.4em;
   transition: 0.5s;
+  border: none;
 }
 
-.actions i:hover {
+.actions button:hover {
   color: #61dafb;
 }
